@@ -4,8 +4,8 @@ im     = require('gm').subClass(imageMagick: true)
 expect = require('chai').expect
 
 module.exports = ->
-  @When /^I request the portrait image as:$/, (table, next) ->
-    Shared.selectorFor 'the portrait', (path) ->
+  @When /^I request (.+) as:$/, (name, table, next) ->
+    Shared.selectorFor name, (path) ->
       Shared.download path, table.hashes()[0], next
 
   @Then /^I should have received an image with:$/, (table, next) ->

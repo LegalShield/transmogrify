@@ -28,11 +28,18 @@ downloadFileFromUrl = (url, next) ->
       http.get url.href, (res) ->
         res.pipe(file)
 
+# transform option
+# null - width & height are treated as *maximum* values, aspect ratio is preserved
+# ^    - width & height are treated as *minimum* values, aspect ratio is preserved
+# !    - width & height are treated as *exact* values, aspect ratio is ignored
+# >    - only resize if image's width || height exceeds specified geometry
+# <    - only resize if image's width && height are less than the geometry specification
+
 convertFile = (path, options, next) ->
   im(path).identify (err, features) ->
     stream = im(path)
-    if options.width? || options.height? || options.option?
-      stream.resize(options.width || null, options.height || null, options.option || null)
+    if options.width? || options.height? || options.transform?
+      stream.resize(options.width || null, options.height || null, options.transform || null)
     stream.noProfile()
     stream.trim()
     stream.toBuffer(next)

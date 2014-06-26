@@ -1,2 +1,3 @@
 module.exports =
-  '^the portrait': '/images/portrait.png'
+  '^a png$': '/images/portrait.png'
+  '^a jpg$': '/images/portrait.jpg'

@@ -18,12 +18,22 @@
 
       document.body.appendChild(document.createElement('hr'));
       var myImg = document.createElement('img');
-      myImg.setAttribute('src', imageUrl('http://localhost:3000/obama-signature.jpg', { height: 100 }));
+      myImg.setAttribute('src', imageUrl('http://localhost:8080/obama-signature.jpg', { height: 100 }));
       document.body.appendChild(myImg);
 
       document.body.appendChild(document.createElement('hr'));
       var myImg = document.createElement('img');
-      myImg.setAttribute('src', imageUrl('http://www.nancyjophoto.com/images/kaley.jpg'));
+      myImg.setAttribute('src', imageUrl('http://www.nancyjophoto.com/images/kaley.jpg', { height: 100, width: 200, transform: '!' }));
+      document.body.appendChild(myImg);
+
+      document.body.appendChild(document.createElement('hr'));
+      var myImg = document.createElement('img');
+      myImg.setAttribute('src', imageUrl('http://www.nancyjophoto.com/images/kaley.jpg', { height: 100, width: 100, transform: '!' }));
+      document.body.appendChild(myImg);
+
+      document.body.appendChild(document.createElement('hr'));
+      var myImg = document.createElement('img');
+      myImg.setAttribute('src', imageUrl('http://www.nancyjophoto.com/images/kaley.jpg', { height: 100, width: 100 }));
       document.body.appendChild(myImg);
 
     </script>
