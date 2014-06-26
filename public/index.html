@@ -1,0 +1,31 @@
+<html>
+  <body>
+    <img src='/obama-signature.jpg'>
+  </body>
+  <head>
+    <script type='text/javascript'>
+      var imageUrl = (function(){
+        var base = '/v1/transform/';
+        return function(imgUrl, options) {
+          options = options || {};
+          var queryString = Object.keys(options).map(function(k){ return [k, options[k]].join('=') }).join('&');
+          var params = [ imgUrl, queryString ].join('?')
+          var encodedParams = btoa(params);
+          var escapedAndEncodedParams = encodeURIComponent(encodedParams);
+          return base + escapedAndEncodedParams;
+        };
+      })();
+
+      document.body.appendChild(document.createElement('hr'));
+      var myImg = document.createElement('img');
+      myImg.setAttribute('src', imageUrl('http://localhost:3000/obama-signature.jpg', { height: 100 }));
+      document.body.appendChild(myImg);
+
+      document.body.appendChild(document.createElement('hr'));
+      var myImg = document.createElement('img');
+      myImg.setAttribute('src', imageUrl('http://www.nancyjophoto.com/images/kaley.jpg'));
+      document.body.appendChild(myImg);
+
+    </script>
+  </head>
+</html>
