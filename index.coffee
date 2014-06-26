@@ -11,7 +11,7 @@ app.get '/v1/transform/:params', V1.TransformController.show
 
 app.use (err, req, res, next) ->
   console.log err
-  next()
+  res.send 500, err.message
 
 server = app.listen config.port, ->
   console.log('Listening on port %d', server.address().port)
