@@ -7,7 +7,8 @@ Feature:
     When I request a png as:
       | width |
       | 100   |
-    Then I should have received an image with:
+    Then I should receive an OK response
+    And I should have received an image with:
       | width |
       | 100   |
 
@@ -15,7 +16,8 @@ Feature:
     When I request a png as:
       | height |
       | 100    |
-    Then I should have received an image with:
+    Then I should receive an OK response
+    And I should have received an image with:
       | height |
       | 100    |
 
@@ -23,7 +25,8 @@ Feature:
     When I request a png as:
       | height | width | transform |
       | 100    | 100   | !         |
-    Then I should have received an image with:
+    Then I should receive an OK response
+    And I should have received an image with:
       | height | width |
       | 100    | 100   |
 
@@ -31,6 +34,7 @@ Feature:
     When I request a jpg as:
       | height | width | transform |
       | 100    | 100   | !         |
-    Then I should have received an image with:
+    Then I should receive an OK response
+    And I should have received an image with:
       | height | width |
       | 100    | 100   |

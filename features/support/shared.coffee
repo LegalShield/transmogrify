@@ -27,6 +27,7 @@ downloadAndSave = (url, next) ->
     file.on 'close', -> next(err, file.path)
     file.on 'open', ->
       http.get url.href, (res) ->
+        Data.response = res
         res.pipe(file)
 
 transformUrl = (url, next) ->
