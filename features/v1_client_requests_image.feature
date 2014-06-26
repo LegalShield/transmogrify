@@ -3,6 +3,7 @@ Feature:
   As a client of the app,
   I can resize an image on the fly
 
+  @thisone
   Scenario: Client changes width on the fly
     When I request a png as:
       | width |

@@ -1,9 +1,10 @@
 Url     = require 'url'
-http    = require 'http'
-qs      = require 'querystring'
 fs      = require 'fs'
-path    = require 'path'
+http    = require 'http'
 im      = require('gm').subClass(imageMagick: true)
+path    = require 'path'
+qs      = require 'querystring'
+request = require 'request'
 tmp     = require 'tmp'
 
 urlAndParamsFromRoute = (params, next) ->
@@ -17,16 +18,16 @@ urlAndParamsFromRoute = (params, next) ->
   catch err
     next err
 
-downloadFileFromUrl = (url, next) ->
-  ext = path.extname(path.basename(url.path))
-  tmp.file postfix: ext, (err, path, fd) ->
-    file = fs.createWriteStream path
-    file.on 'error', next
-    file.on 'close', ->
-      next(err, file.path)
-    file.on 'open', ->
-      http.get url.href, (res) ->
-        res.pipe(file)
+#downloadFileFromUrl = (url, next) ->
+  #ext = path.extname(path.basename(url.path))
+  #tmp.file postfix: ext, (err, path, fd) ->
+    #file = fs.createWriteStream path
+    #file.on 'error', next
+    #file.on 'close', ->
+      #next(err, file.path)
+    #file.on 'open', ->
+      #http.get url.href, (res) ->
+        #res.pipe(file)
 
 # transform option
 # null - width & height are treated as *maximum* values, aspect ratio is preserved
@@ -35,9 +36,20 @@ downloadFileFromUrl = (url, next) ->
 # >    - only resize if image's width || height exceeds specified geometry
 # <    - only resize if image's width && height are less than the geometry specification
 
-convertFile = (path, options, next) ->
-  im(path).identify (err, features) ->
-    stream = im(path)
+#convertFile = (path, options, next) ->
+  #im(path).identify (err, features) ->
+    #stream = im(path)
+    #stream = im(buffer)
+    #if options.width? || options.height? || options.transform?
+      #stream.resize(options.width || null, options.height || null, options.transform || null)
+    #stream.noProfile()
+    #stream.trim()
+    #stream.toBuffer(next)
+
+convertBuffer = (buffer, options, next) ->
+  im(buffer).identify (err, features) ->
+    console.log err
+    stream = im(buffer)
     if options.width? || options.height? || options.transform?
       stream.resize(options.width || null, options.height || null, options.transform || null)
     stream.noProfile()
@@ -47,9 +59,15 @@ convertFile = (path, options, next) ->
 exports.show = (req, res, next) ->
   urlAndParamsFromRoute req.params.params, (err, url, options) ->
     return next err if err?
-    downloadFileFromUrl url, (err, path) ->
-      return next err if err?
-      convertFile path, options, (err, buffer) ->
-        return next err if err?
-        res.header 'Content-type', 'image/png'
-        res.end buffer, 'binary'
+
+    fileExt     = path.extname(path.basename(url.path))
+    fileName    = "image#{fileExt}"
+    contentType = "image/#{fileExt.slice(1)}"
+
+    im(request.get(url.href), fileName)
+      .resize(options.width || null, options.height || null, options.transform || null)
+      .noProfile()
+      .trim()
+      .stream (err, stdout, stderr) ->
+        res.set 'Content-Type', contentType
+        stdout.pipe(res)
