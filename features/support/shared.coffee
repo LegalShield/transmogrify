@@ -1,5 +1,9 @@
 process.env.NODE_ENV = 'test'
 
+app.use '/images', Reflector.App
+
+Reflector.Client originalUrl, {}, (err, encodedUrl) ->
+
 port    = 7707
 express = require 'express'
 request = require 'request'
@@ -10,18 +14,39 @@ fs      = require 'fs'
 path    = require 'path'
 qs      = require 'querystring'
 
-app = express()
-#app.use require('morgan')('dev')
-app.use express.static __dirname + '/fixtures'
-app.use '/v1', require '../../v1'
-app.listen port, -> console.log 'Listening on port ' + port
+asset = express()
+asset.use require('morgan')('dev')
+asset.set 'port', port
+asset.use express.static __dirname + '/fixtures'
+asset.listen asset.get('port'), -> console.log  asset.get('port') + ' - Assets'
 
-urlify = (url, params, next) ->
-  url = Url.parse(url)
-  url.protocol ||= 'http'
-  url.hostname ||= 'localhost'
-  url.port     ||= port
-  url.search   ||= "?#{qs.stringify(params)}" if Object.keys(params).length
+app = express()
+app.use require('morgan')('dev')
+app.set 'port', port + 1
+app.use '/v1', require '../../v1'
+app.listen app.get('port'), -> console.log app.get('port') + ' - App'
+
+assetUrl = (url, params, next) ->
+  try
+    url = Url.parse(url)
+    url.protocol = 'http'
+    url.hostname = 'localhost'
+    url.port     = port
+    url.search   = "?#{qs.stringify(params)}" if Object.keys(params).length
+  catch err
+    return next err
+  next null, Url.parse(Url.format(url))
+
+transformUrl = (url, next) ->
+  try
+    base64ed = new Buffer(url.href).toString('base64')
+    encoded = encodeURIComponent(base64ed)
+    url = Url.parse("/v1/t/#{encoded}")
+    url.protocol = 'http'
+    url.hostname = 'localhost'
+    url.port     = port + 1
+  catch err
+    return next err
   next null, Url.parse(Url.format(url))
 
 downloadAndSave = (url, next) ->
@@ -36,13 +61,8 @@ downloadAndSave = (url, next) ->
         exports.data.response = res
         res.pipe(file)
 
-transformUrl = (url, next) ->
-  base64ed = new Buffer(url.href).toString('base64')
-  encoded = encodeURIComponent(base64ed)
-  urlify "/v1/t/#{encoded}", {}, next
-
 exports.download = (url, params, next) ->
-  urlify url, params, (err, url) ->
+  assetUrl url, params, (err, url) ->
     return next(err) if err?
     transformUrl url, (err, url) ->
       return next(err) if err?
