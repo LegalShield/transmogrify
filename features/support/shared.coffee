@@ -33,7 +33,7 @@ downloadAndSave = (url, next) ->
 transformUrl = (url, next) ->
   base64ed = new Buffer(url.href).toString('base64')
   encoded = encodeURIComponent(base64ed)
-  urlify "/v1/transform/#{encoded}", {}, next
+  urlify "/v1/t/#{encoded}", {}, next
 
 exports.selectorFor = (locator, next) ->
   for regexp, value of selectors
