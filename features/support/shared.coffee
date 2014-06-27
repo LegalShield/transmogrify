@@ -1,9 +1,5 @@
 process.env.NODE_ENV = 'test'
 
-app.use '/images', Reflector.App
-
-Reflector.Client originalUrl, {}, (err, encodedUrl) ->
-
 port    = 7707
 express = require 'express'
 request = require 'request'
