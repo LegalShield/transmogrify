@@ -57,6 +57,8 @@ downloadAndSave = (url, next) ->
         exports.data.response = res
         res.pipe(file)
 
+exports.data = {}
+
 exports.download = (url, params, next) ->
   assetUrl url, params, (err, url) ->
     return next(err) if err?
@@ -66,5 +68,3 @@ exports.download = (url, params, next) ->
         return next(err) if err?
         exports.data.filePath = filePath
         next err, filePath
-
-exports.data = {}
