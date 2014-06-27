@@ -1,11 +1,11 @@
 <html>
   <body>
-    <img src='/obama-signature.jpg'>
+    <img src='https://s3.amazonaws.com/shake-prod/attachments/signature_blocks/signature_image/53ac1d7840801edf01000c81-original.png'>
   </body>
   <head>
     <script type='text/javascript'>
       var imageUrl = (function(){
-        var base = '/v1/transform/';
+        var base = '/v1/t/';
         return function(imgUrl, options) {
           options = options || {};
           var queryString = Object.keys(options).map(function(k){ return [k, options[k]].join('=') }).join('&');
@@ -18,7 +18,10 @@
 
       document.body.appendChild(document.createElement('hr'));
       var myImg = document.createElement('img');
-      myImg.setAttribute('src', imageUrl('http://localhost:8080/obama-signature.jpg', { height: 100 }));
+      myImg.setAttribute('src', imageUrl(
+        'https://s3.amazonaws.com/shake-prod/attachments/signature_blocks/signature_image/53ac1d7840801edf01000c81-original.png',
+        { width: 600 }
+      ));
       document.body.appendChild(myImg);
 
       document.body.appendChild(document.createElement('hr'));
