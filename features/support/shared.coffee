@@ -9,6 +9,7 @@ tmp     = require 'tmp'
 fs      = require 'fs'
 path    = require 'path'
 qs      = require 'querystring'
+im      = require('gm').subClass(imageMagick: true)
 
 asset = express()
 asset.use require('morgan')('dev')
@@ -45,26 +46,19 @@ transformUrl = (url, next) ->
     return next err
   next null, Url.parse(Url.format(url))
 
-downloadAndSave = (url, next) ->
-  ext = path.extname(path.basename(url.pathname))
-  tmp.file postfix: ext, (err, filePath) ->
-    return next(err) if err?
-    file = fs.createWriteStream filePath
-    file.on 'error', next
-    file.on 'close', -> next(err, file.path)
-    file.on 'open', ->
-      http.get url.href, (res) ->
-        exports.data.response = res
-        res.pipe(file)
-
-exports.data = {}
+download = (url, next) ->
+  stream = request.get url.href, (err, response) ->
+    exports.response = response
+  img = im(stream)
+  img.on 'error', next
+  img.identify next
 
 exports.download = (url, params, next) ->
   assetUrl url, params, (err, url) ->
     return next(err) if err?
     transformUrl url, (err, url) ->
       return next(err) if err?
-      downloadAndSave url, (err, filePath) ->
+      download url, (err, info) ->
         return next(err) if err?
-        exports.data.filePath = filePath
-        next err, filePath
+        exports.info = info
+        next err, info

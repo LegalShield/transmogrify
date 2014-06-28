@@ -7,12 +7,14 @@ module.exports = ->
     Shared.download "/image.#{type}", table.hashes()[0], next
 
   @Then /^I should have received an image with:$/, (table, next) ->
-    im(Shared.data.filePath).size (err, info) ->
-      return next err if err?
-      for property, value of table.hashes()[0]
-        expect("#{info[property]}", property).to.eql("#{value}")
-      next err
+    for property, value of table.hashes()[0]
+      expect("#{Shared.info.size[property]}", property).to.eql("#{value}")
+    next()
+
+  @Then /^I should have received a (.+)$/, (type, next) ->
+    expect(type).to.eql(Shared.info.format.toLowerCase())
+    next()
 
   @Then /^I should receive an OK response$/, (next) ->
-    expect(Shared.data.response.statusCode).to.eql(200)
+    expect(Shared.response.statusCode).to.eql(200)
     next()
