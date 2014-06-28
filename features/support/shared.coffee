@@ -49,9 +49,7 @@ transformUrl = (url, next) ->
 download = (url, next) ->
   stream = request.get url.href, (err, response) ->
     exports.response = response
-  img = im(stream)
-  img.on 'error', next
-  img.identify next
+  im(stream).identify next
 
 exports.download = (url, params, next) ->
   assetUrl url, params, (err, url) ->

@@ -7,11 +7,16 @@ qs      = require 'querystring'
 request = require 'request'
 tmp     = require 'tmp'
 
+shouldResize = (options) ->
+  true in (key in ['width', 'height', 'transform'] for key in Object.keys(options))
+
 contentTypeMap =
   '.gif':  'image/gif'
   '.jpeg': 'image/jpeg'
   '.jpg':  'image/jpeg'
   '.png':  'image/png'
+
+knownFormats = [ 'gif', 'jpg', 'jpeg', 'png' ]
 
 urlAndParamsFromRoute = (params, next) ->
   try
@@ -41,9 +46,15 @@ exports.show = (req, res, next) ->
 
     img = im(request.get(url.href), fileName)
     img.on 'error', next
-    img.resize(options.width || null, options.height || null, options.transform || null)
     img.noProfile()
     img.trim()
+
+    if shouldResize(options)
+      img.resize(options.width || null, options.height || null, options.transform || null)
+
+    if options.type in knownFormats
+      img.setFormat(options.type)
+
     img.stream (err, stdout, stderr) ->
       res.set 'Content-Type', contentType
       stdout.pipe(res)
