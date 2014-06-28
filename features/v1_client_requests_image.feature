@@ -29,12 +29,3 @@ Feature:
     And I should have received an image with:
       | height | width |
       | 100    | 100   |
-
-  Scenario: Client transforms a jpeg
-    When I request a jpg as:
-      | height | width | transform |
-      | 100    | 100   | !         |
-    Then I should receive an OK response
-    And I should have received an image with:
-      | height | width |
-      | 100    | 100   |
