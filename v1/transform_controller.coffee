@@ -19,7 +19,6 @@ contentTypeMap =
   '.jpg':  'image/jpeg'
   '.png':  'image/png'
 
-
 urlAndParamsFromRoute = (params, next) ->
   try
     url      = Url.parse((new Buffer(params, 'base64').toString('utf8')))
