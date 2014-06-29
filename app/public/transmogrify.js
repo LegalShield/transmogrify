@@ -14,9 +14,18 @@ $(function(){
     return url.href;
   };
 
+  var activateLinks = function(){
+    $('a[open]').each(function(i, a){
+      a = $(a)
+      a.attr('href', a.find('img').attr('src'));
+    });
+  };
+
+  var count = $('img[tm]').length;
   $('img[tm]').each(function(i, img){
     $(img).attr('src', encodeUrl($(img).data()));
-  });
+    --count || activateLinks();
+  })
 
   $('form').submit(function(e){
     e.preventDefault();
@@ -34,5 +43,11 @@ $(function(){
 
   $('form#tryIt input').change(tryItUpdate);
   $('form#tryIt select').change(tryItUpdate);
+
+  $('input[data-value]').each(function(i, input){
+    var parser = document.createElement('a');
+    parser.href = $(input).data('value');
+    $(input).attr('value', parser.href);
+  });
 
 });

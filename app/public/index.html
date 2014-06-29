@@ -34,7 +34,31 @@
         <div class="col-md-9">
           <div class="tab-content">
             <div class="tab-pane fade in active" id="overview">
-              <p> Change an image on the fly.  </p>
+              <div class="row">
+                <div class="col-md-12">
+                  <p> Change an image on the fly.  </p>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-6">
+                  The original image is 2000x1125 pixels. And is too large to be used. We can resize this image with CSS, but we've still had to download a 2000x1125 px image.
+                </div>
+                <div class="col-md-6">
+                  What if we could ask for the image at the size we need?
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-6">
+                  <a open target='_blank'>
+                    <img src="/her.jpeg" style='width:200px;'>
+                  </a>
+                </div>
+                <div class="col-md-6">
+                  <a open target='_blank'>
+                    <img tm data-href="/her.jpeg" data-width="200" >
+                  </a>
+                </div>
+              </div>
             </div>
             <div class="tab-pane fade" id="resize">
               <div class="row">
@@ -80,7 +104,7 @@
                   <div class="col-md-12">
                     <div class="form-group">
                       <label for="url">Enter Url of an Image:</label>
-                      <input id="url" name="href" type="url" class="form-control" value="http://www.shakelaw.com/wp-content/themes/shake/theme/im/shake_logo.png" required>
+                      <input id="url" name="href" type="url" class="form-control" data-value="/her.jpeg" required>
                     </div>
                   </div>
                 </div>
