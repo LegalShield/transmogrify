@@ -14,7 +14,7 @@
   <body>
     <div class="container">
       <div class="row">
-        <div class="col-md-offset-3 col-md-9">
+        <div class="col-md-9">
           <div class="header">
             <h3 class="text-muted">Transmogrify</h3>
           </div>
@@ -25,8 +25,6 @@
         <div class="col-md-3 sidebar">
           <ul class="nav nav-pills nav-stacked" role="tablist">
             <li> <a href="#overview" data-toggle="tab">Overview</a> </li>
-            <li> <a href="#resize" data-toggle="tab">Resize & Aspect Ratio</a> </li>
-            <li> <a href="#format" data-toggle="tab">Change Format</a> </li>
             <li> <a href="#try" data-toggle="tab">Try It</a> </li>
           </ul>
         </div>
@@ -41,63 +39,35 @@
               </div>
               <div class="row">
                 <div class="col-md-6">
-                  The original image is 2000x1125 pixels. And is too large to be used. We can resize this image with CSS, but we've still had to download a 2000x1125 px image.
+                  <div class="row">
+                    <div class="col-md-12">
+                      The original image is 2000x1125 pixels. And is too large to be used. We can resize this image with CSS, but we've still had to download a 2000x1125 px image.
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-md-12">
+                      <a open target='_blank'>
+                        <img src="/her.jpeg" style='width:200px;'>
+                      </a>
+                    </div>
+                  </div>
                 </div>
                 <div class="col-md-6">
-                  What if we could ask for the image at the size we need?
-                </div>
-              </div>
-              <div class="row">
-                <div class="col-md-6">
-                  <a open target='_blank'>
-                    <img src="/her.jpeg" style='width:200px;'>
-                  </a>
-                </div>
-                <div class="col-md-6">
-                  <a open target='_blank'>
-                    <img tm data-href="/her.jpeg" data-width="200" >
-                  </a>
-                </div>
-              </div>
-            </div>
-            <div class="tab-pane fade" id="resize">
-              <div class="row">
-                <div class="col-md-12">
-                  <h4> Width / Height </h4>
-                </div>
-              </div>
-              <div class="row">
-                <div class="col-md-6">
-                  <h3> 25% / </h3>
-                  <img tm data-href="/signature.jpg" data-width="25%" >
-                </div>
-                <div class="col-md-6">
-                  <h3> 50% / </h3>
-                  <img tm data-href="/signature.jpg" data-width="50%">
-                </div>
-              </div>
-              <div class="row">
-                <div class="col-md-6">
-                  <h3> / 25% </h3>
-                  <img tm data-href="/signature.jpg" data-height="25%">
-                </div>
-                <div class="col-md-6">
-                  <h3> / 50% </h3>
-                  <img tm data-href="/signature.jpg" data-height="50%">
-                </div>
-              </div>
-              <div class="row">
-                <div class="col-md-6">
-                  <h3> / 25px </h3>
-                  <img tm data-href="/signature.jpg" data-height="25">
-                </div>
-                <div class="col-md-6">
-                  <h3> / 75px </h3>
-                  <img tm data-href="/signature.jpg" data-height="75">
+                  <div class="row">
+                    <div class="col-md-12">
+                      What if we could ask for the image at the size we need?
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-md-12">
+                      <a open target='_blank'>
+                        <img tm data-href="/her.jpeg" data-width="200" >
+                      </a>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
-            <div class="tab-pane fade" id="format">...</div>
             <div class="tab-pane fade" id="try">
               <form role="form" id="tryIt">
                 <div class="row">
@@ -109,29 +79,65 @@
                   </div>
                 </div>
                 <div class="row">
-                  <div class="col-md-3">
-                    <label for="width">Width:</label>
-                    <input id="width" name="width" type="number" step="10" min="10" class="form-control">
+                  <!--<div class="col-md-3">-->
+                    <!--<div class="form-group">-->
+                      <!--<label for="width">Width:</label>-->
+                      <!--<input id="width" name="width" type="number" step="10" min="10" class="form-control">-->
+                    <!--</div>-->
+                  <!--</div>-->
+                  <!--<div class="col-md-3">-->
+                    <!--<div class="form-group">-->
+                      <!--<label for="height">Height:</label>-->
+                      <!--<input id="height" name="height" type="number" step="10" min="10" class="form-control">-->
+                    <!--</div>-->
+                  <!--</div>-->
+                  <div class="col-xs-6">
+                    <div class="row">
+                      <div class="col-sm-6">
+                        <div class="form-group">
+                          <label for="width">Width:</label>
+                          <input id="width" name="width" type="number" step="10" min="10" class="form-control">
+                        </div>
+                      </div>
+                      <div class="col-sm-6">
+                        <div class="form-group">
+                          <label for="height">Height:</label>
+                          <input id="height" name="height" type="number" step="10" min="10" class="form-control">
+                        </div>
+                      </div>
+                    </div>
                   </div>
-                  <div class="col-md-3">
-                    <label for="height">Height:</label>
-                    <input id="height" name="height" type="number" step="10" min="10" class="form-control">
+
+                  <div class="col-xs-6">
+                    <div class="row">
+                      <div class="col-sm-6">
+                        <div class="form-group">
+                          <label for="transform">Transform:</label>
+                          <select id="transform" name="transform" class="form-control">
+                            <option value=""> Choose...</option>
+                            <option value="!"> Exact</option>
+                          </select>
+                        </div>
+                      </div>
+                      <div class="col-sm-6">
+                        <div class="form-group">
+                          <label for="format">Format:</label>
+                          <select id="format" name="format" class="form-control">
+                            <option value=""> Choose...</option>
+                            <option value="png"> PNG</option>
+                            <option value="jpg"> JPG</option>
+                            <option value="gif"> GIF</option>
+                          </select>
+                        </div>
+                      </div>
+                    </div>
                   </div>
-                  <div class="col-md-3">
-                    <label for="transform">Transform:</label>
-                    <select id="transform" name="transform" class="form-control">
-                      <option value=""> Choose...</option>
-                      <option value="!"> Exact</option>
-                    </select>
-                  </div>
-                  <div class="col-md-3">
-                    <label for="format">Format:</label>
-                    <select id="format" name="format" class="form-control">
-                      <option value=""> Choose...</option>
-                      <option value="png"> PNG</option>
-                      <option value="jpg"> JPG</option>
-                      <option value="gif"> GIF</option>
-                    </select>
+                </div>
+                <div class="row">
+                  <div class="col-md-12">
+                    <div class="form-group">
+                      <button class="btn btn-default" type="reset" value="Reset"> Reset </button>
+                    </div>
                   </div>
                 </div>
               </form>
