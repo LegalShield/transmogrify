@@ -1,0 +1,20 @@
+{
+  "name": "app",
+  "version": "0.0.0",
+  "homepage": "https://github.com/jonstorer/reflector",
+  "authors": [
+    "Jonathon Storer <jonathon.scott.storer@gmail.com>"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "bootstrap": "~3.2.0",
+    "jquery.serializeJSON": "~2.1.0"
+  }
+}
