@@ -20,6 +20,7 @@
   },
   "scripts": {
     "test": "./node_modules/.bin/cucumber-js features",
-    "postinstall": "find ./*/ -name package.json -maxdepth 1 -execdir npm install \\;"
+    "postinstall": "cd ./app && npm install && cd -",
+    "stash-this-here": "find ./*/ -maxdepth 1 -name package.json -execdir npm install \\;"
   }
 }
