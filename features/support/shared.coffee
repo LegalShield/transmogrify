@@ -3,11 +3,7 @@ process.env.NODE_ENV = 'test'
 port    = 7707
 express = require 'express'
 request = require 'request'
-http    = require 'http'
 Url     = require 'url'
-tmp     = require 'tmp'
-fs      = require 'fs'
-path    = require 'path'
 qs      = require 'querystring'
 im      = require('gm').subClass(imageMagick: true)
 

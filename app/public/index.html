@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/bootstrap-theme.min.css">
+    <script src="/jquery.min.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
+    <script src="/transmogrify.js"></script>
+    <script src="/jquery.serializejson.min.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+  </head>
+
+  <body>
+    <div class="container">
+      <div class="row">
+        <div class="col-md-offset-3 col-md-9">
+          <div class="header">
+            <h3 class="text-muted">Transmogrify</h3>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-3 sidebar">
+          <ul class="nav nav-pills nav-stacked" role="tablist">
+            <li> <a href="#overview" data-toggle="tab">Overview</a> </li>
+            <li> <a href="#resize" data-toggle="tab">Resize & Aspect Ratio</a> </li>
+            <li> <a href="#format" data-toggle="tab">Change Format</a> </li>
+            <li> <a href="#try" data-toggle="tab">Try It</a> </li>
+          </ul>
+        </div>
+
+        <div class="col-md-9">
+          <div class="tab-content">
+            <div class="tab-pane fade in active" id="overview">
+              <p> Change an image on the fly.  </p>
+            </div>
+            <div class="tab-pane fade" id="resize">
+              <div class="row">
+                <div class="col-md-12">
+                  <h4> Width / Height </h4>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-6">
+                  <h3> 25% / </h3>
+                  <img tm data-href="/signature.jpg" data-width="25%" >
+                </div>
+                <div class="col-md-6">
+                  <h3> 50% / </h3>
+                  <img tm data-href="/signature.jpg" data-width="50%">
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-6">
+                  <h3> / 25% </h3>
+                  <img tm data-href="/signature.jpg" data-height="25%">
+                </div>
+                <div class="col-md-6">
+                  <h3> / 50% </h3>
+                  <img tm data-href="/signature.jpg" data-height="50%">
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-6">
+                  <h3> / 25px </h3>
+                  <img tm data-href="/signature.jpg" data-height="25">
+                </div>
+                <div class="col-md-6">
+                  <h3> / 75px </h3>
+                  <img tm data-href="/signature.jpg" data-height="75">
+                </div>
+              </div>
+            </div>
+            <div class="tab-pane fade" id="format">...</div>
+            <div class="tab-pane fade" id="try">
+              <form role="form" id="tryIt">
+                <div class="row">
+                  <div class="col-md-12">
+                    <div class="form-group">
+                      <label for="url">Enter Url of an Image:</label>
+                      <input id="url" name="href" type="url" class="form-control" value="http://www.shakelaw.com/wp-content/themes/shake/theme/im/shake_logo.png" required>
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-md-3">
+                    <label for="width">Width:</label>
+                    <input id="width" name="width" type="number" step="10" min="10" class="form-control">
+                  </div>
+                  <div class="col-md-3">
+                    <label for="height">Height:</label>
+                    <input id="height" name="height" type="number" step="10" min="10" class="form-control">
+                  </div>
+                  <div class="col-md-3">
+                    <label for="transform">Transform:</label>
+                    <select id="transform" name="transform" class="form-control">
+                      <option value=""> Choose...</option>
+                      <option value="!"> Exact</option>
+                    </select>
+                  </div>
+                  <div class="col-md-3">
+                    <label for="format">Format:</label>
+                    <select id="format" name="format" class="form-control">
+                      <option value=""> Choose...</option>
+                      <option value="png"> PNG</option>
+                      <option value="jpg"> JPG</option>
+                      <option value="gif"> GIF</option>
+                    </select>
+                  </div>
+                </div>
+              </form>
+              <br>
+              <br>
+              <div class="row">
+                <div class="col-md-3" id="meta"> </div>
+                <div class="col-md-9" id="output"> </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
