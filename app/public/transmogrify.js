@@ -11,7 +11,7 @@ $(function(){
     url.href = sUrl.href;
     delete sUrl.href;
     url.search = '?' + toQueryString(sUrl);
-    url.href = 'd1uwsxmus01xme.cloudfront.net/v1/t/' + encodeURIComponent(btoa(url.href));
+    url.href = 'http://d1uwsxmus01xme.cloudfront.net/v1/t/' + encodeURIComponent(btoa(url.href));
     return url.href;
   };
 
