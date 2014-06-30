@@ -5,4 +5,6 @@ exports.show = (req, res, next) ->
   { url, options } = ParamsParser(req.params.params)
   image = new Image(url, options)
   res.set 'Content-Type', image.contentType()
-  image.stream (err, stdout, stderr) -> stdout.pipe(res)
+  image.stream (err, stdout, stderr) ->
+    return next(err) if err?
+    stdout.pipe(res)

@@ -1,4 +1,5 @@
 $(function(){
+  //d1uwsxmus01xme.cloudfront.net
   var toQueryString = function(object){
     return Object.keys(object).map(function(k){
       return [k, object[k]].join('=');
@@ -10,7 +11,7 @@ $(function(){
     url.href = sUrl.href;
     delete sUrl.href;
     url.search = '?' + toQueryString(sUrl);
-    url.href = '/v1/t/' + encodeURIComponent(btoa(url.href));
+    url.href = 'd1uwsxmus01xme.cloudfront.net/v1/t/' + encodeURIComponent(btoa(url.href));
     return url.href;
   };
 
