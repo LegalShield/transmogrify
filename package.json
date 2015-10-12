@@ -19,7 +19,7 @@
     "cucumber": "latest"
   },
   "scripts": {
-    "test": "./node_modules/.bin/cucumber-js features",
+    "test": "./node_modules/.bin/cucumber-js -compiler coffee:coffee-script/register features",
     "postinstall": "cd ./app && npm install && cd - && cd ./v1 && npm install && cd -",
     "stash-this-here": "find ./*/ -maxdepth 1 -name package.json -execdir npm install \\;"
   }
