@@ -1,9 +1,8 @@
-Url     = require 'url'
-qs      = require 'querystring'
+Url       = require 'url'
+base64Url = require 'base64-url'
+qs        = require 'querystring'
 
 module.exports = exports = (params) ->
-  url      = Url.parse((new Buffer(params, 'base64').toString('utf8')))
-  options  = qs.parse(url.query)
-  url.path = url.search = url.query = ''
-  url      = Url.parse(Url.format(url))
-  { url: url, options: options }
+  unescaped = base64Url.unescape params
+  unencoded = base64Url.decode unescaped
+  JSON.parse unencoded

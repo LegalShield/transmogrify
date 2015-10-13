@@ -30,9 +30,9 @@ class Image
   transform = -> options.transform
   format    = -> options.type
 
-  constructor: (uri, opts) ->
-    url     = uri
-    options = opts
+  constructor: (params) ->
+    url     = params.url
+    options = params
 
   contentType: -> contentTypeMap[fileExt()]
 

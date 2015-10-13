@@ -1,11 +1,12 @@
 process.env.NODE_ENV = 'test'
 
-port    = 7707
-express = require 'express'
-request = require 'request'
-Url     = require 'url'
-qs      = require 'querystring'
-im      = require('gm').subClass(imageMagick: true)
+port      = 7707
+express   = require 'express'
+request   = require 'request'
+Url       = require 'url'
+qs        = require 'querystring'
+base64Url = require 'base64-url'
+im        = require('gm').subClass(imageMagick: true)
 
 asset = express()
 asset.use require('morgan')('dev')
@@ -19,22 +20,22 @@ app.set 'port', port + 1
 app.use '/v1', require '../../v1'
 app.listen app.get('port'), -> console.log app.get('port') + ' - App'
 
-assetUrl = (url, params, next) ->
+assetPayload = (url, params, next) ->
   try
     url = Url.parse(url)
     url.protocol = 'http'
     url.hostname = 'localhost'
     url.port     = port
-    url.search   = "?#{qs.stringify(params)}" if Object.keys(params).length
+    params.url = Url.parse(Url.format(url))
   catch err
     return next err
-  next null, Url.parse(Url.format(url))
+  next null, params
 
-transformUrl = (url, next) ->
+transformPayload = (payload, next) ->
   try
-    base64ed = new Buffer(url.href).toString('base64')
-    encoded = encodeURIComponent(base64ed)
-    url = Url.parse("/v1/t/#{encoded}")
+    encoded = base64Url.encode(JSON.stringify(payload))
+    escaped = base64Url.escape encoded
+    url = Url.parse("/v1/t/#{escaped}")
     url.protocol = 'http'
     url.hostname = 'localhost'
     url.port     = port + 1
@@ -48,9 +49,9 @@ download = (url, next) ->
   im(stream).identify next
 
 exports.download = (url, params, next) ->
-  assetUrl url, params, (err, url) ->
+  assetPayload url, params, (err, payload) ->
     return next(err) if err?
-    transformUrl url, (err, url) ->
+    transformPayload payload, (err, url) ->
       return next(err) if err?
       download url, (err, info) ->
         return next(err) if err?
